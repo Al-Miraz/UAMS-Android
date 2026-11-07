@@ -32,6 +32,8 @@ jobs:
           accept-android-sdk-licenses: true
           packages: |
             platform-tools
+            platforms;android-35
+            build-tools;35.0.0
 
       - name: Build APK
         run: gradle assembleDebug
