@@ -26,14 +26,26 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Check Android SDK
+      - name: Locate Android SDK Manager
+        shell: bash
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
-          which sdkmanager
-          sdkmanager --version
+          SDKMANAGER="$(find "$ANDROID_HOME" -type f -name sdkmanager -print -quit)"
+
+          if [ -z "$SDKMANAGER" ]; then
+            echo "ERROR: sdkmanager was not found inside ANDROID_HOME"
+            find "$ANDROID_HOME" -maxdepth 4 -type d || true
+            exit 1
+          fi
+
+          echo "Found sdkmanager: $SDKMANAGER"
+          echo "$(dirname "$SDKMANAGER")" >> "$GITHUB_PATH"
 
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses
+        run: |
+          set +o pipefail
+          yes | sdkmanager --licenses
+          set -o pipefail
 
       - name: Install Android SDK packages
         run: |
