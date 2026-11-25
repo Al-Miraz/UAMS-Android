@@ -2,8 +2,13 @@
     <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:colorAccent">#0875E1</item>
-        <item name="android:statusBarColor">#0866D9</item>
+
+        <!-- Dark fallback behind transparent Android 15 system bars. -->
+        <item name="android:windowBackground">#101827</item>
+        <item name="android:statusBarColor">#101827</item>
         <item name="android:navigationBarColor">#101827</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
     </style>
 </resources>
